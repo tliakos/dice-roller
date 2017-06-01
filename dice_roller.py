@@ -24,25 +24,30 @@ class Roll(object):
 				roll_it = random.randint(st, dicetype)
 				if drm:
 					roll_it = (roll_it+drm)
-				print("ROLL: %s") % roll_it
+					print("ROLLED: %s with DRM: %s" % \
+						(roll_it, drm))
+				print("ROLLED: %s") % roll_it
 				return
 		elif dicetype in (10, 20):
 			st = 0
 			for dc in range(dicecount):
 				roll_it = random.randint(st, dicetype)
 				if drm:
-					print("ROLL: %s with DRM: %s" % (roll_it, drm))
+					print("ROLLED: %s with DRM: %s:" % \
+						(roll_it, drm))
 					roll_it = (roll_it+drm)
-				print("ROLL: %s") % roll_it
+				print("ROLLED: %s") % roll_it
 				return
+
 
 	def __init__(self, dicecount, dicetype, total, drm):
 		self.dicetype = int(dicetype)
 		self.dicecount = int(dicecount)
 		self.drm = drm
 		self.total = total
+		self.tf = tf
 		self.check_ranges(dicecount, dicetype)
-		self.dice_roll(dicecount, dicetype, total, drm)
+		self.dice_roll(dicecount, dicetype, total, drm, tf)
 	
 		
 def main(argv):
@@ -67,12 +72,19 @@ def main(argv):
 		type=int,
 		help='Dice Roll Modifier'
 		)
+	parser.add_argument('-tf',
+		required=False, 
+		type=int,
+		help='Dice Roll Attempts'
+	)
 	args = parser.parse_args(argv)
 
 	if args.total:
 		total = args.total
 	if args.drm:		
 		drm = args.drm
+	if args.tf:
+		drm = args.tf
 
 	dicecount = args.dicecount
 	dicetype = args.dicetype
@@ -80,7 +92,8 @@ def main(argv):
 		args.dicetype,
 		args.dicecount,
 		args.total,
-		args.drm
+		args.drm,
+		args.tf
 		)
 	
 
