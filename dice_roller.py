@@ -45,9 +45,8 @@ class Roll(object):
 		self.dicecount = int(dicecount)
 		self.drm = drm
 		self.total = total
-		self.tf = tf
 		self.check_ranges(dicecount, dicetype)
-		self.dice_roll(dicecount, dicetype, total, drm, tf)
+		self.dice_roll(dicecount, dicetype, total, drm)
 	
 		
 def main(argv):
@@ -72,19 +71,13 @@ def main(argv):
 		type=int,
 		help='Dice Roll Modifier'
 		)
-	parser.add_argument('-tf',
-		required=False, 
-		type=int,
-		help='Dice Roll Attempts'
-	)
+
 	args = parser.parse_args(argv)
 
 	if args.total:
 		total = args.total
 	if args.drm:		
 		drm = args.drm
-	if args.tf:
-		drm = args.tf
 
 	dicecount = args.dicecount
 	dicetype = args.dicetype
@@ -92,10 +85,9 @@ def main(argv):
 		args.dicetype,
 		args.dicecount,
 		args.total,
-		args.drm,
-		args.tf
+		args.drm
 		)
-	
+
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
